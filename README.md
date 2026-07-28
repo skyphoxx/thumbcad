@@ -163,3 +163,5 @@ or makes you smile while creating —
 then it’s doing its job.
 
 Have fun. Break it. Build on it.
+
+Art is for everyone!
