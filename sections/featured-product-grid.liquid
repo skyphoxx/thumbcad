@@ -1,0 +1,144 @@
+<section class="featured-product-grid">
+  <div class="featured-product-grid__inner">
+    <div class="featured-product-grid__columns">
+      {% for block in section.blocks %}
+        {% assign product = block.settings.product %}
+
+        {% if product != blank %}
+          <article
+            class="featured-product-grid__card"
+            {{ block.shopify_attributes }}
+          >
+            {% if product.featured_image %}
+              <a
+                class="featured-product-grid__image-link"
+                href="{{ product.url }}"
+              >
+                {{
+                  product.featured_image
+                  | image_url: width: 800
+                  | image_tag:
+                    class: 'featured-product-grid__image',
+                    alt: product.title,
+                    loading: 'lazy'
+                }}
+              </a>
+            {% endif %}
+
+            <h3 class="featured-product-grid__title">
+              <a href="{{ product.url }}">
+                {{ product.title }}
+              </a>
+            </h3>
+
+            <p class="featured-product-grid__price">
+              {{ product.price | money }}
+            </p>
+
+            <a
+              class="featured-product-grid__button"
+              href="{{ product.url }}"
+            >
+              Buy now
+            </a>
+          </article>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .featured-product-grid {
+    padding: 48px 20px;
+  }
+
+  .featured-product-grid__inner {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .featured-product-grid__columns {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .featured-product-grid__card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .featured-product-grid__image-link {
+    display: block;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+  }
+
+  .featured-product-grid__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .featured-product-grid__title {
+    margin: 16px 0 8px;
+  }
+
+  .featured-product-grid__price {
+    margin: 0 0 16px;
+  }
+
+  .featured-product-grid__button {
+    display: inline-block;
+    align-self: flex-start;
+    margin-top: auto;
+    padding: 12px 20px;
+    text-decoration: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .featured-product-grid__columns {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Featured product grid",
+  "max_blocks": 3,
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured product grid",
+      "blocks": [
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
